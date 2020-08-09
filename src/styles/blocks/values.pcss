@@ -1,0 +1,35 @@
+.values__container {
+  position: relative;
+  padding: 100 0 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    background: url('~images/decor/backpack.jpg') left bottom / contain no-repeat;
+    display: block;
+    bottom: 0;
+    height: 35vmin;
+    width: 35vmin;
+    left: 0%;
+  }
+}
+.values__title {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 auto 79px;
+}
+
+.values__title-text {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 41px;
+  margin-bottom: 53px;
+}
+
+.values__content {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 30px;
+  color: rgba(70, 78, 98, 0.8)
+}

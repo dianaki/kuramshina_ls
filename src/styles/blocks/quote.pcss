@@ -1,0 +1,27 @@
+.quote {
+  display: flex;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 65px;
+    max-height: 57px;
+    background: svg-load('quote.svg', fill="#DDE3EC") center center / cover no-repeat;
+    margin-right: 21px;
+  }
+}
+
+.quote__wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quote__text {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 30px;
+  color: rgba(70, 78, 98, 0.6);
+  margin-bottom: 42px;
+}
