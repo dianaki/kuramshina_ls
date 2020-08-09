@@ -1,0 +1,34 @@
+.triangles{
+  display: flex;
+  background: inherit;
+
+  &__item{
+    width: 50%;
+    height: 120px;
+  }
+
+  .triangle{
+    fill: currentColor;
+  }
+}
+
+.values__triangles{
+  position: absolute;
+  bottom: 100%;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  color: #fff;
+}
+
+.reviews__triangles .triangle {
+  transform: rotate(180deg);
+  height: 90px;
+}
+
+.reviews__triangles {
+  position: absolute;
+  color: #fff;
+  width: 100%;
+  top: 0;
+}
