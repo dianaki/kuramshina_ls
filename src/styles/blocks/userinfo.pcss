@@ -4,7 +4,13 @@
   align-items: center;
   margin: 0 auto;
   text-align: center;
-  width: 400px;
+  width: 30%;
+
+  @include desktop {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 51%;
+  }
 }
 
 .userinfo__title {
@@ -13,6 +19,13 @@
   font-weight: 600;
   margin-bottom: 30px;
   text-align: center;
+
+  @include desktop {
+    text-align: right;
+    width: 55%;
+    margin-bottom: 0;
+    margin-right: 34px;
+  }
 }
 
 .userinfo__name {

@@ -9,16 +9,37 @@
 }
 
 .footer__copyright {
+  width: 25%;
+  display: flex;
+  color: rgba(#fff, .1);
+  justify-content: space-between;
+  margin-right: 3%;
+
+  @include desktop {
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20%;
+  }
+}
+.footer__copyright-col {
+  flex: 1;
+}
+.footer__copyright-year {
   font-weight: 600;
   font-size: 48px;
   line-height: 65px;
   color:  #464E62;
   white-space: nowrap;
-  margin-right: 56px;
 }
 
-.footer__userinfo {
-  padding-right: 4%;
+.footer__copyright-userinfo {
+  width: 41%;
+  padding-top: 9px;
+
+  @include desktop {
+    width: 100%;
+    
+  }
 }
 
 .footer__userinfo-name {
@@ -28,13 +49,14 @@
   color: #fff;
   text-transform: uppercase;
   width: 15%;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .footer__userinfo-title {
   font-size: 16px;
   line-height: 30px;
   color: #464E62;
+  margin-bottom: 25px;
 }
 
 .footer-info__desc {
@@ -45,10 +67,15 @@
 .footer__menu {
   margin-bottom: 26px;
   color: #fff;
+
+  .menu__item {
+    margin-right: 58px;
+  }
 }
 
 .footer-info {
   flex: 1;
+  padding-top: 9px;
 }
 
 .footer-info__parag {
@@ -60,11 +87,19 @@
 
 .footer-info__col {
   &_left {
-    padding-right: 17%; 
+    padding-right: 18%; 
+
+    @include desktop {
+      padding-right: 4%;
+    }
   }
 
   &_right {
-    padding-right: 3%; 
+    padding-right: 10%;
+
+    @include desktop {
+      padding-right: 11%;
+    } 
   }
 }
     
