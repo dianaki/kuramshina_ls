@@ -20,6 +20,11 @@
     justify-content: space-between;
     width: 20%;
   }
+
+  @include tablets {
+    width: 32%;
+    max-height: 200px
+  }
 }
 .footer__copyright-col {
   flex: 1;
@@ -62,6 +67,10 @@
 .footer-info__desc {
   display: flex;
   justify-content: space-between;
+
+  @include tablets {
+    flex-direction: column;
+  }
 }
 
 .footer__menu {
@@ -92,13 +101,17 @@
     @include desktop {
       padding-right: 4%;
     }
+
+    @include tablets {
+      margin-bottom: 50px;
+    }
   }
 
   &_right {
     padding-right: 10%;
 
     @include desktop {
-      padding-right: 11%;
+      padding-right: 12%;
     } 
   }
 }

@@ -3,6 +3,10 @@
   display: flex;
   justify-content: space-between;
   padding-right: 54%;
+
+  @include tablets {
+    padding-right: 33%;
+  }
 }
 
 .slider__buttons {
@@ -44,5 +48,9 @@
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @include tablets {
+    margin-right: 23px;
   }
 }

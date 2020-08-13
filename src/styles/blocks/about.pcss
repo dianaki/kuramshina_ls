@@ -8,12 +8,16 @@
   max-width: 978px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 .about__user {
   width: 35%;
   display: flex;
   justify-content: space-between;
+
+  @include tablets {
+    width: 47%;
+  }
 }
 .user {
   display: flex;
@@ -44,9 +48,13 @@
   color: #464E62;
 }
 .about__content {
-  width: 56%; 
+  width: 60%; 
   font-weight: 600;
-  padding-left: 3%;
+  padding-left: 5%;
+
+  @include tablets {
+    width: 53%;
+  }
 }
 .about__desc {
   line-height: 22px;
@@ -67,6 +75,10 @@
     color: rgba(70, 78, 98, 0.8);
     line-height: 30px;
     font-size: 16px;
+  }
+
+  @include tablets {
+    margin-bottom: 36px;
   }
 }
 .about__ps {

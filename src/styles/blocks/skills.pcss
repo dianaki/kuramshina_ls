@@ -3,6 +3,11 @@
   flex-direction: column;
   align-items: flex-end;
   padding-left: 30%;
+
+  @include tablets {
+    align-items: center;
+    padding-left: 0;
+  }
 }
 
 .skills__item {
@@ -19,6 +24,10 @@
   line-height: 33px;
   color: #464E62;
   margin-bottom: 39px;
+
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .skills-row__list {

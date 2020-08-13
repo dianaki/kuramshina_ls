@@ -1,0 +1,18 @@
+.hamburger {
+  display: none;
+  width: 30px;
+  height: 25px;
+
+  @include tablets {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.hamburger__line {
+  background-color: #464E62;
+  height: 4px;
+  width: 100%;
+  display: block;
+}

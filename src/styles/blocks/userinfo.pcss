@@ -11,20 +11,32 @@
     align-items: flex-start;
     width: 51%;
   }
+
+  @include tablets {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .userinfo__title {
   font-size: 18px;
   color: rgba($text-color, .4);
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   text-align: center;
+  line-height: 30px;
 
   @include desktop {
     text-align: right;
     width: 55%;
-    margin-bottom: 0;
+    margin-bottom: 24px;
     margin-right: 34px;
+  }
+
+  @include tablets {
+    text-align: center;
+    margin-right: 0;
+    font-size: 16px;
   }
 }
 
@@ -33,4 +45,9 @@
   font-size: 72px;
   font-weight: 800;
   line-height: 60px;
+
+  @include tablets {
+    line-height: 48px;
+    font-size: 48px;
+  }
 }
