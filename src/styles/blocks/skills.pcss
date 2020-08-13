@@ -33,11 +33,24 @@
 .skills-row__list {
   display: flex;
   flex-wrap: wrap;
+
+  @include phones {
+    justify-content: center;
+  }
 }
 
 .skills-row__item {
   margin-right: 35px;
 
+  @include phones {
+    margin-right: 22px;
+  }
+
+  &:nth-child(odd){
+    @include phones {
+      margin-right: 0;
+    }
+  }
   &:last-child {
     margin-right: 0;
   }

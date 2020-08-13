@@ -15,6 +15,10 @@
       width: 37px;
       max-height: 27px;
     }
+
+    @include phones {
+      display: none;
+    }
   }
 }
 
@@ -34,5 +38,9 @@
 
   @include tablets {
     font-size: 14px;
+  }
+
+  @include phones {
+    width: 85%;
   }
 }

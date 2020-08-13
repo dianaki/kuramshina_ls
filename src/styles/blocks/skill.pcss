@@ -2,6 +2,11 @@
   position: relative;
   width: 166px;
   height: 166px;
+
+  @include phones {
+    width: 115px;
+    height: 115px;
+  }
 }
 
 .skill__circle {
@@ -28,4 +33,8 @@
   font-size: 18px;
   color: rgba(70, 78, 98, 0.5);
   text-align: center;
+
+  @include phones {
+    font-size: 15px;
+  }
 }

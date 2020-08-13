@@ -6,6 +6,10 @@
   padding: 5% 0;
   display: flex;
   justify-content: space-between;
+
+  @include phones {
+    flex-direction: column;
+  }
 }
 
 .footer__copyright {
@@ -24,6 +28,11 @@
   @include tablets {
     width: 32%;
     max-height: 200px
+  }
+
+  @include phones {
+    width: 100%;
+    margin-right: 0;
   }
 }
 .footer__copyright-col {
@@ -55,6 +64,10 @@
   text-transform: uppercase;
   width: 15%;
   margin-bottom: 18px;
+
+  @include phones {
+    width: 100%;
+  }
 }
 
 .footer__userinfo-title {
@@ -79,6 +92,11 @@
 
   .menu__item {
     margin-right: 58px;
+
+    @include phones {
+      margin-right: 80px;
+      margin-bottom: 20px;
+    }
   }
 }
 
