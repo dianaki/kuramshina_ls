@@ -22,9 +22,9 @@
 }
 
 .works-preview__pics {
-  width: 66%;
+  width: 60%;
   position: relative;
-  margin-right: 12%;
+  margin-right: 11%;
   margin-bottom: 4%;
 
   @include desktop {
@@ -80,8 +80,15 @@
 .thumbs__item {
   height: 100px;
   width: 178px;
-  transition: .2s;
+  transition: all .2s;
   position: relative;
+  outline: 3px solid transparent;
+  z-index: 20;
+
+  &:hover, &.active {
+    outline-color: #DC9322;
+    z-index: 30;
+  } 
 
   @include desktop {
     height: 65px;
@@ -93,24 +100,6 @@
   display: block;
   height: 100%;
   width: 100%;
-
-  &:hover .thumbs__link-border {
-    border-color: #DC9322;
-  }
-}
-.thumbs__link-border {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: 3px solid transparent;
-  z-index: 25;
-  transition: all .3s;
-}
-.thumbs__pic {
-  position: relative;
-  z-index: 20;
 }
 
 .works-preview__buttons {
@@ -166,7 +155,7 @@ display: flex;
 }
 
 .works-preview__info {
-  width: 25%;
+  width: 27%;
   z-index: 20;
 
   @include tablets {

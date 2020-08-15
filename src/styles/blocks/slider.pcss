@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity .3s ease;
 
   &:after {
     content: "";
@@ -37,6 +38,14 @@
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &:disabled {
+    opacity: .5;
+
+    &:hover {
+      cursor: default;
+    }
   }
 }
 
