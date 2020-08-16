@@ -1,6 +1,14 @@
 .quote {
   display: flex;
 
+  @include desktop {
+    max-width: 345px;
+  }
+
+  @include tablets {
+    max-width: 298px;
+  }
+
   &::before {
     content: "";
     display: block;

@@ -5,19 +5,11 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 4% 0;
-
-  @include tablets {
-    justify-content: flex-start;
-  }
 }
 
 .hero__button {
   display: flex;
   justify-content: center;
-
-  @include tablets {
-    display: none;
-  }
 }
 
 .scroll-down-btn {
@@ -26,6 +18,11 @@
   font-size: 18px;
   font-weight: 600;
   position: relative;
+  
+  @include tablets {
+    display: none;
+  }
+
 }
 
 .scroll__icon{

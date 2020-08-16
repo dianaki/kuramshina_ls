@@ -28,12 +28,12 @@ script(type="text/x-template")#preview-display
 script(type="text/x-template")#preview-thumbs
   ul.thumbs
     li.thumbs__item(
-      v-for="slide in works" :key="slide.id"
+      v-for="(slide, index) in works" :key="slide.id"
       :class="{active: currentWork.id === slide.id}"
     )
       button(
         type="button"
-        @click
+        @click="$emit('slide', index)"
       ).thumbs__link
         img(:src="slide.photo").thumbs__pic
 

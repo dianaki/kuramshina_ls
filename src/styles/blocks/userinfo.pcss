@@ -4,21 +4,23 @@
   align-items: center;
   margin: 0 auto;
   text-align: center;
+  min-width: 628px;
   width: 30%;
 
   @include desktop {
     flex-direction: row;
     align-items: flex-start;
-    width: 51%;
   }
 
   @include tablets {
     flex-direction: column;
     align-items: center;
+    min-width: 285px;
   }
 
   @include phones {
     width: 90%;
+    min-width: 206px;
   }
 }
 
@@ -34,12 +36,10 @@
     text-align: right;
     width: 55%;
     margin-bottom: 24px;
-    margin-right: 34px;
   }
 
   @include tablets {
     text-align: center;
-    margin-right: 0;
     font-size: 16px;
   }
 }

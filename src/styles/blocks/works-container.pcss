@@ -22,12 +22,14 @@
 }
 
 .works-preview__pics {
-  width: 60%;
+  max-width: 975px;
+  height: 100%;
   position: relative;
-  margin-right: 11%;
-  margin-bottom: 4%;
+  margin-right: 8vw;
+  margin-bottom: 3vw;
 
   @include desktop {
+    max-width: 637px;
     width: 61%;
   }
 
@@ -45,17 +47,20 @@
   &:before {
     content: attr(data-slide);
     position: absolute;
-    top: 5%;
-    transform: translateX(172px);
-    line-height: 1;
+    top: 14%;
     right: 0;
-    font-size: 400px;
-    font-weight: 800;
     color: #DDE3EC;
+    line-height: 1;
+    font-size: 22.5vw;
+    font-weight: 800;
+    transform: translateX(9vw);
 
+    @include desktop {
+      font-size: 26vw;
+    }
     @include tablets {
-      top: 23%;
-      right: -2%;
+      font-size: 37vw;
+      transform: translateX(15vw);
     }
 
     @include phones {
@@ -77,6 +82,12 @@
     display: none;
   }
 }
+
+.thumbs {
+  display: flex;
+  flex-direction: column;
+}
+
 .thumbs__item {
   height: 100px;
   width: 178px;
@@ -157,6 +168,10 @@ display: flex;
 .works-preview__info {
   width: 27%;
   z-index: 20;
+
+  @include desktop {
+    width: 33%;
+  }
 
   @include tablets {
     display: flex;

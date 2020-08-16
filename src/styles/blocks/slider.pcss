@@ -2,14 +2,14 @@
   margin-bottom: 78px;
   display: flex;
   justify-content: space-between;
-  padding-right: 54%;
+  max-width: 590px;
+  align-items: center;
 
   @include tablets {
-    padding-right: 33%;
+    max-width: 500px;
   }
 
   @include phones {
-    padding: 0;
     flex-direction: column;
     align-items: center;
   }
@@ -17,6 +17,7 @@
 
 .slider__buttons {
   display: flex;
+  margin-left: 10px;
 }
 
 .slider__btn {

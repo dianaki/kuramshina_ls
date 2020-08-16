@@ -3,7 +3,7 @@ script(type="text/x-template")#slider-container
     .slider__header
       .section-title.reviews__section-title Что обо мне говорят
       .slider__buttons
-        button(type="button" @click="slide('prev')" :disabled="isBeginning").slider__btn.round-btn.round-btn--pointer--left
+        button(type="button" @click="slide('prev')" :disabled="isBegining").slider__btn.round-btn.round-btn--pointer--left
         button(type="button" @click="slide('next')" :disabled="isEnd").slider__btn.round-btn.round-btn--pointer--right
     swiper(ref="slider", :options="sliderOptions")
       swiper-slide(v-for="review in reviews" :key="review.id" height= "100%")

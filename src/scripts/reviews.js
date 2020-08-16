@@ -12,7 +12,7 @@ new Vue({
     return {
       reviews: [],
       isEnd: false,
-      isBeginning: true,
+      isBegining: true,
       sliderOptions: {
         breakpoints: {
           320: {
@@ -32,8 +32,8 @@ new Vue({
     checkPosition(slider) {
       this.$nextTick(() => {
         this.isEnd = slider.isEnd;
-        this.isBeginning = slider.isBeginning;
-        console.log(this.isBeginning, this.isEnd);
+        this.isBegining = slider.isBegining;
+        console.log(this.isBegining, this.isEnd);
       });
     },
     requireImagesToArray(data) {
