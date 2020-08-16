@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
 
 new Vue({
@@ -12,7 +12,7 @@ new Vue({
     return {
       reviews: [],
       isEnd: false,
-      isBegining: true,
+      isBeginning: true,
       sliderOptions: {
         breakpoints: {
           320: {
@@ -49,11 +49,11 @@ new Vue({
         case 'next':
           this.checkPosition(slider);
           slider.slideNext();
-        break;
+          break;
         case 'prev':
           this.checkPosition(slider);
           slider.slidePrev();
-        break;
+          break;
       }
     },
   },
