@@ -19,6 +19,10 @@ block content
               li.socials__item
                 a(href="#" target="_blank").socials__link
                   +icon(item, "socials__icon")
+          button(type="button").hamburger
+            span.hamburger__line
+            span.hamburger__line
+            span.hamburger__line
 
         .userinfo
           .userinfo__title Личный сайт #[br] веб разработчика
@@ -51,7 +55,7 @@ block content
             .about__desc Привет, меня зовут
             .about__title Владимир Астаханов
             .about__text-info
-              p Я занимаюсь разработкой современных сайтов и приложений. #[br] Мне нравится делать интересные и современные проекты.
+              p Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
             .about__ps
               | Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
   .middle-section
@@ -69,57 +73,12 @@ block content
           .values__content
             p Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
         .values__widget
-          -
-            var skillsCategories = [
-              ["Front-end", ["HTML5", "CSS3", "javascript", "jquery и Vue.js"]],
-              ["Workflow", ["GIT", "Terminal", "Gulp", "Webpack"]]
-            ]
-
-          ul.skills
-            each category in skillsCategories
-              li.skills__item
-                .skills-row
-                  .skills-row__title #{category[0]}
-                  ul.skills-row__list
-                    svg.skills__gradient
-                      linearGradient(id="gradient" xl="0%" y1="0%" x2="100%" y2="0%")
-                        stop(offset="0%" stop-color="#5500F2")
-                        stop(offset="100%" stop-color="#AD00ED")
-                    each skill in category[1]
-                      li.skills-row__item
-                        .skill 
-                          svg(viewBox="0 0 100 100").skill__circle-shape
-                            circle(cx="50" cy="50" r="40").skill__circle.skill__circle--layer--under
-                            circle(cx="50" cy="50" r="40" stroke="url(#gradient)" transform="rotate(180 50 50)").skill__circle.skill__circle--layer--above
-                          .skill__title #{skill}
+          #skills-component
     section.works#works
       .container.works-container
         .section-title.works__section-title Мои работы
         .works__content
-          .works-preview
-            .works-preview__pics(data-slide="2")
-              +image("content/slide1.jpg", "works-preview__img")
-              .works-preview__thumbs
-                ul.thumbs
-                  - for (var i = 4; i > 0; i--)
-                    li.thumbs__item
-                      button(type="button").thumbs__link
-                        .thumbs__link-border
-                        +image(`content/slide${i}.jpg`, "thumbs__pic")
-              .works-preview__buttons
-                .square-btns
-                  button(type="button").square-btns__item.square-btns__item_next
-                  button(type="button").square-btns__item.square-btns__item_prev      
-            .works-preview__info
-              ul.tags
-                - var tags = ["HTML", "CSS", "javascript"];
-                each item in tags
-                  li.tags__item
-                    .tag #{item}
-              .works-preview__title Сайт школы образования
-              .works-preview__desc
-                  p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!
-              a(href="#" target="_blank").iconed-link Посмотреть сайт
+          #preview-component
 
     section.reviews#reviews
 
@@ -130,45 +89,16 @@ block content
           polygon(points="1000,0 1000,100 0,100")
 
       .container
-        .slider
-          .slider__header
-            .section-title Что обо мне говорят
-            .slider__buttons
-              button(type="button").slider__btn.round-btn.round-btn--pointer--right
-              button(type="button").slider__btn.round-btn.round-btn--pointer--left
-          ul.slider__content
-            li.slider__item
-              .quote
-                .quote__wrapper
-                  .quote__text
-                    p Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 4,5 месяца только самых тяжелых испытаний и бессонных ночей!
-                  .quote__user
-                    .user-display
-                      .user-display__avatar
-                        .user-display__style
-                          +image("content/user.jpg", "user-display__pic")
-                      .user-display__data
-                        .user-display__name Ковальчук Дмитрий
-                        .user-display__occ Основатель Loftschool
-            li.slider__item
-              .quote
-                .quote__wrapper
-                  .quote__text
-                    p Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах
-                  .quote__user
-                    .user-display
-                      .user-display__avatar
-                        .user-display__style
-                          +image("content/user.jpg", "user-display__pic")
-                      .user-display__data
-                        .user-display__name Владимир Сабанцев
-                        .user-display__occ Преподаватель
+        #slider-component
+        
   footer.footer
     .container.footer__container
-      .footer__copyright © 2020
-      .footer__userinfo
-        .footer__userinfo-name Владимир Астаханов
-        .footer__userinfo-title Личный сайт #[br] веб-разработчика
+      .footer__copyright 
+        .footer__copyright-col
+          .footer__copyright-year © 2020
+        .footer__copyright-userinfo
+          .footer__userinfo-name Владимир Астаханов
+          .footer__userinfo-title Личный сайт #[br] веб-разработчика
       .footer-info
         nav.menu.footer__menu
           ul.menu__list

@@ -1,6 +1,14 @@
 .quote {
   display: flex;
 
+  @include desktop {
+    max-width: 345px;
+  }
+
+  @include tablets {
+    max-width: 298px;
+  }
+
   &::before {
     content: "";
     display: block;
@@ -8,6 +16,17 @@
     max-height: 57px;
     background: svg-load('quote.svg', fill="#DDE3EC") center center / cover no-repeat;
     margin-right: 21px;
+
+    @include tablets {
+      background: svg-load('quote.svg', fill="#DDE3EC", width="37px", height="27px") center center / cover no-repeat;
+      margin-right: 5px;
+      width: 37px;
+      max-height: 27px;
+    }
+
+    @include phones {
+      display: none;
+    }
   }
 }
 
@@ -24,4 +43,12 @@
   line-height: 30px;
   color: rgba(70, 78, 98, 0.6);
   margin-bottom: 42px;
+
+  @include tablets {
+    font-size: 14px;
+  }
+
+  @include phones {
+    width: 85%;
+  }
 }

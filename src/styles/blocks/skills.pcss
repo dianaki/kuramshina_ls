@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  padding-left: 30%;
+
+  @include tablets {
+    align-items: center;
+    padding-left: 0;
+  }
 }
 
 .skills__item {
@@ -18,19 +24,21 @@
   line-height: 33px;
   color: #464E62;
   margin-bottom: 39px;
+
+  @include tablets {
+    text-align: center;
+  }
 }
 
 .skills-row__list {
   display: flex;
   flex-wrap: wrap;
+  margin-left: -30px;
+  justify-content: center;
 }
 
 .skills-row__item {
-  margin-right: 35px;
-
-  &:last-child {
-    margin-right: 0;
-  }
+  margin-left: 30px;
 }
 .skills__gradient {
   width: 0;

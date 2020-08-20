@@ -2,11 +2,22 @@
   margin-bottom: 78px;
   display: flex;
   justify-content: space-between;
-  padding-right: 54%;
+  max-width: 590px;
+  align-items: center;
+
+  @include tablets {
+    max-width: 500px;
+  }
+
+  @include phones {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .slider__buttons {
   display: flex;
+  margin-left: 10px;
 }
 
 .slider__btn {
@@ -16,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity .3s ease;
 
   &:after {
     content: "";
@@ -28,6 +40,14 @@
   &:last-child {
     margin-right: 0;
   }
+
+  &:disabled {
+    opacity: .5;
+
+    &:hover {
+      cursor: default;
+    }
+  }
 }
 
 .slider__content {
@@ -35,6 +55,10 @@
   align-items: stretch;
   max-width: 861px;
   width: 100%;
+
+  @include phones {
+    overflow: hidden;
+  }
 }
 
 .slider__item {
@@ -44,5 +68,12 @@
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @include tablets {
+    width: 100%;
+    margin-right: 0;
+    flex-shrink: 0;
+    max-width: 100%;
   }
 }

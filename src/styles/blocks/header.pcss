@@ -2,4 +2,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @include tablets {
+    margin-bottom: 110px;
+  }
+}
+
+.header .menu {
+  @include tablets {
+    display: none;
+  }
+}
+
+.header .socials {
+ @include phones {
+   display: none;
+ }
 }

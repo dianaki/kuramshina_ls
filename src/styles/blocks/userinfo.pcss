@@ -4,15 +4,44 @@
   align-items: center;
   margin: 0 auto;
   text-align: center;
-  width: 400px;
+  min-width: 628px;
+  width: 30%;
+
+  @include desktop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  @include tablets {
+    flex-direction: column;
+    align-items: center;
+    min-width: 285px;
+  }
+
+  @include phones {
+    width: 90%;
+    min-width: 206px;
+  }
 }
 
 .userinfo__title {
   font-size: 18px;
   color: rgba($text-color, .4);
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   text-align: center;
+  line-height: 30px;
+
+  @include desktop {
+    text-align: right;
+    width: 55%;
+    margin-bottom: 24px;
+  }
+
+  @include tablets {
+    text-align: center;
+    font-size: 16px;
+  }
 }
 
 .userinfo__name {
@@ -20,4 +49,9 @@
   font-size: 72px;
   font-weight: 800;
   line-height: 60px;
+
+  @include tablets {
+    line-height: 48px;
+    font-size: 48px;
+  }
 }

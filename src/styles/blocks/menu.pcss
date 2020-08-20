@@ -1,6 +1,10 @@
 .menu__list {
   display: flex;
   align-items: center;
+
+  @include tablets {
+    flex-wrap: wrap;
+  }
 }
 
 .menu__item {

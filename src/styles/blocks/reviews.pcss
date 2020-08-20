@@ -1,6 +1,24 @@
 .reviews {
   position: relative;
-  padding: 226px 0;
+  padding: 230px 0 0;
   background: url("~images/bg/budda.jpg") center top / cover no-repeat;
-  min-height: 1040px;
+  min-height: 900px;
+
+  @include desktop {
+    background-position: top left 10%;
+  }
+
+  @include tablets {
+    background-position: top -24% left 39%;
+  }
+
+  @include phones {
+    background-position: top -80% left 54%;
+  }
+}
+
+.reviews__section-title {
+  @include phones {
+    margin-bottom: 20px;
+  }
 }
