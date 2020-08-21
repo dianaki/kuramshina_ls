@@ -1,7 +1,11 @@
 <template>
-  <div class="skill-add-line-component">
+  <div 
+    :class="['skill-add-line-component', {blocked: blocked}]"
+    >
     <div class="add-title">
-       <app-input placeholder="Новый навык" />
+      <app-input 
+      placeholder="Новый навык" 
+      />
     </div>
     <div class="add-percent">
       <app-input type="number" min="0" max="100" maxlength="3" />
@@ -17,6 +21,9 @@ import input from "../input";
 import button from "../button";
 
 export default {
+  props: {
+    blocked: Boolean
+  },
   components: {
     appInput: input,
     roundButton: button,

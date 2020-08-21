@@ -7,4 +7,19 @@
   margin-right: 8px;
   margin-bottom: 8px;
   font-size: 13px;
+
+  &.interactive {
+    padding-right: 30px;
+    position: relative;
+
+    .remove {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      right: 13px;
+      top:50%;
+      transform: translateY(-50%);
+      background: svg-load('cross.svg', fill = '#373E42') center center no-repeat;
+    }
+  }
 }
