@@ -1,0 +1,25 @@
+.list {
+  display: flex;
+}
+
+.link {
+  padding: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+
+  &:hover {
+    color: #5500F2;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #5500F2;
+    }
+  }
+}

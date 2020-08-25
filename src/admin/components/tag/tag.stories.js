@@ -6,9 +6,9 @@ export default {
 }
 
 export const defaultView = () => ({
-  components: { tag },
+  components: {tag},
   template: `
-    <tag title="tag" />
+    <tag title="tag"/>
   `
 });
 
@@ -16,7 +16,23 @@ defaultView.story = {
   name: "Стандартный вид",
   parameters: {
     backgrounds: [
-      { name: 'grey', value: '#8395a7', default: true },
+      {name: 'grey', value: '#F3F6F9', default: true},
+    ],
+  },
+};
+
+export const interactiveView = () => ({
+  components: {tag},
+  template: `
+    <tag title="tag" interactive />
+  `
+});
+
+interactiveView.story = {
+  name: "С контролом",
+  parameters: {
+    backgrounds: [
+      {name: 'grey', value: '#F3F6F9', default: true},
     ],
   },
 };

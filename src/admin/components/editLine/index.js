@@ -1,1 +1,1 @@
-export {default} from "./editLine.vue"
+export {default} from "./editLine.vue";
