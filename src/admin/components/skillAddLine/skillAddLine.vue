@@ -1,35 +1,35 @@
 <template>
   <div class="">
     <div 
-      @submit.prevent="someAction()"
+      @submit.prevent="someAction"
       :class="['skill-add-line-component', {blocked: blocked}]"
       >
       <div class="add-title">
         <app-input 
         v-model="skill"
         placeholder="Новый навык" 
+        :errorMessage="validation.firstError('this.skill')"
         />
       </div>
       <div class="add-percent">
         <app-input 
         v-model="percent"
-        type="number" min="0" max="100" maxlength="3" />
+        type="number" min="0" max="100" maxlength="3" 
+        :errorMessage="validation.firstError('this.percent')"
+        />
       </div>
       <div class="add-button">
         <round-button 
-        :disabled="!isSkillValid"
         type="round" />
       </div>
     </div> 
-    <div 
-    v-if="isSkillError"
-    class="text-error">Не все поля формы заполнены</div>
   </div>
 </template>
 
 <script>
 import input from "../input";
 import button from "../button";
+import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 
 export default {
   props: {
@@ -39,18 +39,24 @@ export default {
     appInput: input,
     roundButton: button,
   },
-  data() {
-    return {
-      skill: null,
-      percent: null,
-    };
-  },
-  computed: {
-    isSkillValid() {
-      return this.skill && this.percent;
+  validators: {
+    "this.skill": value => {
+      return Validator.value(value).required("Введите навык");
     },
-    isSkillError() {
-      return !this.isSkillValid
+    "this.percent": value => {
+      return Validator.value(value).required("Введите уровень навыка")
+    }
+  },
+  data:() => ({
+    skill: null,
+    percent: null,
+  }),
+  methods: {
+    someAction() {
+      this.$validate().then ((isValid) => {
+        if (isValid === false)
+        return;
+      });
     },
   },
 };
@@ -61,9 +67,5 @@ export default {
 
 <style lang="postcss" scoped>
 
-.text-error {
-  text-align: center;
-  color:red;
-}
 
 </style>

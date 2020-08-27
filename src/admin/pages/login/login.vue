@@ -1,7 +1,7 @@
 <template>
   <div class="login-page-component">
     <div class="content">
-      <div class="form">
+      <form class="form" @submit.prevent="handleSubmit">
         <div class="form-title">Авторизация</div>
         <div class="form__btn-close">
           <button class="btn-close">
@@ -11,15 +11,27 @@
           </button>
         </div>
         <div class="row">
-          <app-input title="Логин" icon="user" />
+          <app-input 
+          title="Логин" 
+          v-model="user.name" 
+          icon="user" 
+          :errorMessage="validation.firstError('user.name')"
+          />
         </div>
         <div class="row">
-          <app-input title="Пароль" icon="key" type="password" />
+          <app-input 
+          title="Пароль" 
+          v-model="user.password" 
+          icon="key" 
+          type="password" 
+          :errorMessage="validation.firstError('user.password')"
+          />
         </div>
         <div class="btn">
-           <appButton title="Отправить" @click="onClick" />
+           <appButton 
+           typeAttr="submit" />
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -27,11 +39,45 @@
 <script>
 import appInput from "../../components/input";
 import appButton from "../../components/button";
+import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
+import axios from "axios";
+
+const baseURL= "https://webdev-api.loftschool.com";
 
 export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    "user.name": value => {
+      return Validator.value(value).required("Введите логин");
+    },
+    "user.password": value => {
+      return Validator.value(value).required("Введите пароль");
+    }
+  },
+  data: () => ({
+    user: {
+      name: "",
+      password: "",
+    }
+  }),
   components: { 
     appInput,
     appButton,
+  },
+  methods: {
+    handleSubmit() {
+      this.$validate().then((isValid) => {
+        if (isValid === false) 
+        return;
+        
+        axios.post(baseURL + '/login', this.user).then(response => {
+          const token = response.data.token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+          this.$router.replace('/');
+        })
+      });
+    },
   },
 };
 </script>

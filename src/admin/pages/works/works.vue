@@ -8,22 +8,18 @@
 </template>
 
 <script>
-import tagsAdder from '../tagsAdder'
+import tagsAdder from '../../components/tagsAdder';
 
 export default {
   name: 'works',
   components: {
     tagsAdder
   },
-  data () {
-    return {
-    
-    }
-  }
 }
 </script>
 
 <style lang="postcss" scoped>
+
 .title {
   font-size: 21px;
   font-weight: bold;
