@@ -6,7 +6,11 @@
           v-for="link in links" 
           :class="['item', {active: link.active}]" 
           :key="link.id">
-          <a :href="`/${link.alias}`" class="link">{{link.title}}</a>
+          <router-link
+            class="link"
+            :to="{name: link.alias}">
+            {{link.title}}
+          </router-link>
         </li>
      </ul>
     </div>
