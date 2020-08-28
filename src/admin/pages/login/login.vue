@@ -41,6 +41,7 @@ import appInput from "../../components/input";
 import appButton from "../../components/button";
 import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 import $axios from "../../requests";
+import {mapActions} from "vuex"
 
 export default {
   mixins: [ValidatorMixin],
@@ -63,8 +64,12 @@ export default {
     appButton,
   },
   methods: {
+    ...mapActions({
+      showTooltip: "tooltips/show"
+    }),
+
     async handleSubmit() {
-      if (this.$validate() === false) return;
+      if ((await this.$validate()) === false) return;
       try {
         const response = await $axios.post('/login', this.user)
       
@@ -74,7 +79,11 @@ export default {
         this.$router.replace('/');
 
       } catch (error) {
-        console.log(error.response.data.error)
+        this.showTooltip({
+          text: error.response.data.error,
+          type: "error"
+        });
+        this.password = "";
       }
     },
   },
@@ -87,7 +96,7 @@ export default {
 }
 .content {
   min-height: 100vh;
-   display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;

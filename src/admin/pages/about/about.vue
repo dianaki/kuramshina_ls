@@ -26,7 +26,7 @@
               :title="category.category"
               :skills="category.skills"
               @create-skill="createSkill($event, category.id)"
-              @edit-skill="editskill()"
+              @edit-skill="editSkill"
               @remove-skill="removeSkill"
             />
           </li>

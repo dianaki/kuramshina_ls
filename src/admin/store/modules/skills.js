@@ -17,8 +17,13 @@ export default {
         throw new Error ("Ошибка");
       }
     },
-    edit() {
-      console.log('edit');
+    async edit({commit}, skillToEdit) {
+      try {
+        const { data } = await this.$axios.post(`/skills/${skillToEdit.id}`, skillToEdit);
+        commit ("categories/EDIT_SKILL", data.skill, {root:true})
+      } catch (error) {
+        throw new Error ("Ошибка");
+      }
     },
   }
 }

@@ -21,6 +21,21 @@ export default {
         }
         return category;
       })
+    },
+    EDIT_SKILL: (state, skillToEdit) => {
+      const editSkillInCategory = category => {
+        category.skills = category.skills.map(skill => {
+          return skill.id === skillToEdit.id ? skillToEdit : skill
+        });
+      }
+
+      const findCategory = category => {
+        if (category.id === skillToEdit.category) {
+          editSkillInCategory(category);
+        }
+        return category;
+      }
+      state.data = state.data.map(findCategory);
     }
   },
   actions: {
