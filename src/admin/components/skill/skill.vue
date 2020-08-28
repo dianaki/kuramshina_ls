@@ -4,7 +4,7 @@
     <div class="percent">{{skill.percent}}</div>
     <div class="buttons">
       <icon symbol="pencil" class="btn" @click="editmode = true" grayscale />
-      <icon symbol="trash" class="btn" @click="$emit('remove', skill.id)" grayscale />
+      <icon symbol="trash" class="btn" @click="$emit('remove', currentSkill)" grayscale />
     </div>
   </div>
 
@@ -38,9 +38,10 @@
       return {
         editmode: false,
         currentSkill: {
-          id: 0,
+          id: this.skill.id,
           title: this.skill.title,
           percent: this.skill.percent,
+          category: this.skill.category,
         }
       };
     },

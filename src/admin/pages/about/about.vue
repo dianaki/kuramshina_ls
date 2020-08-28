@@ -27,7 +27,7 @@
               :skills="category.skills"
               @create-skill="createSkill($event, category.id)"
               @edit-skill="editskill()"
-              @remove-skill="removeSkill()"
+              @remove-skill="removeSkill"
             />
           </li>
         </ul>
@@ -78,7 +78,7 @@ export default {
       skill.percent = "";
     },
 
-    removeSkill () {
+    removeSkill(skill) {
       this.removeSkillAction(skill);
     },
 

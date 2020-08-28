@@ -13,6 +13,14 @@ export default {
         }
         return category;
       })
+    },
+    REMOVE_SKILL: (state, skillToRemove) => {
+      state.data = state.data.map(category => {
+        if (category.id === skillToRemove.category) {
+          category.skills = category.skills.filter(skill => skill.id != skillToRemove.id)
+        }
+        return category;
+      })
     }
   },
   actions: {
