@@ -9,7 +9,7 @@
     <div v-else class="title">
       <div class="input">
         <app-input
-          :errorMessage="validation.firstError('currentCategory.category')"
+          v-model="category.title"
           placeholder="Название новой группы"
           :value="value"
           :errorText="errorText"
@@ -24,7 +24,7 @@
           <icon symbol="tick" @click="onApprove"></icon>
         </div>
         <div class="button-icon">
-          <icon symbol="cross" @click="$emit('remove')"></icon>
+          <icon symbol="cross" @click="$emit('remove', category.id)"></icon>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@ import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 export default {
   mixins: [ValidatorMixin],
   validators: {
-    "currentCategory.category"(value) {
+    "category.title"(value) {
       return Validator.value(value).required('Обязательно для заполнения')
     }
   },
@@ -57,32 +57,23 @@ export default {
     return {
       editmode: this.editModeByDefault,
       title: this.value,
-      currentCategory: {...this.category}
+      category: {
+        title: "",
+        id: "",
+      }
     };
   },
   methods: {
-    ...mapActions("categories", ['removeCategory', 'editCategory']),
     onApprove() {
-      if (this.value.trim() === "") return false;
-      if (this.title.trim() === this.value.trim()) {
-        this.editmode = false;
-      } else {
-        this.$emit("approve", this.value);
-      }
+      this.$validate().then(seccess => {
+        if (!seccess) return;
+        if (this.title.trim() === this.value.trim()) {
+          this.editmode = false;
+        } else {
+          this.$emit("approve", this.value);
+        }
+      })
     },
-    async removeCurrentCategory() {
-      try {
-        await this.removeCategory(this.category);
-      } catch (error) {
-        
-      }
-    },
-    async changeCurrentCategory() {
-      if(await this.$validate("currentCategory.category") === false);
-      this.currentCategory = {...this.category};
-      this.efitMode = false;
-      return;
-    }
   },
   components: {
     icon: () => import("components/icon"),

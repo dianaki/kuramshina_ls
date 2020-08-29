@@ -15,6 +15,8 @@
             <category 
               @remove="emptyCategoryShow = false"
               @approve="createCategory"
+              @edit-category="editCategory"
+              @remove-category="removeCategory"
               empty 
             />
           </li>
@@ -64,6 +66,9 @@ export default {
     ...mapActions({
       createCategoryAction: "categories/create",
       fetchCategoriesAction: "categories/fetch",
+      removeCategoryAction: "categories/removeCategory",
+      editCategoryAction: "categories/editCategory",
+
       addSkillAction: "skills/add",
       removeSkillAction: "skills/remove",
       editSkillAction: "skills/edit",
@@ -76,6 +81,14 @@ export default {
       await this.addSkillAction(newSkill);
       skill.title = "";
       skill.percent = "";
+    },
+
+    removeCategory(category) {
+      this.removeCategoryAction(category);
+    },
+
+    editCategory(category) {
+      this.editCategoryAction(category);
     },
 
     removeSkill(skill) {

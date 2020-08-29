@@ -13,7 +13,7 @@ export default {
     EDIT_CATEGORY: (state, editedCategory) => {
       state.data = state.data.map(category => {
         return category.id === editedCategory.id ? editedCategory : category;
-      })
+      });
     },
     ADD_SKILL: (state, newSkill) => {
       state.data = state.data.map(category => {
@@ -60,33 +60,34 @@ export default {
     async editCategory({ commit }, category) {
       try {
         const response = await this.$axios.post(`/categories/${category.id}`, category);
-        commit('EDIT_CATEGORY', response, data.category);
+        commit('EDIT_CATEGORY', category);
         return response;
       } catch (error) {
         throw new Error(
           error.response.data.error || error.response.data.message
         );
       }
-    }
+    },
+    async removeCategory({ commit }, categoryId) {
+      try {
+        const response = await this.$axios.delete(`/categories/${category.id}`);
+        commit("REMOVE_CATEGORY", categoryId);
+        return response;
+      } catch (error) {
+        throw new Error(
+          error.response.data.error || error.response.data.message
+        );
+      }
+    },
+    async fetch({ commit }) {
+      try {
+        const { data } = await this.$axios.get('/categories/366');
+        commit("SET_CATEGORIES", data)
+      } catch (error) {
+        throw new Error(
+          error.responce.data.error || error.responce.data.message
+        )
+      }
+    },
   },
-  async removeCategory({ commit }, categoryId) {
-    try {
-      const response = await this.$axios.delete(`/categories/${category.id}`);
-      commit("REMOVE_CATEGORY", categoryId);
-      return response;
-    } catch (error) {
-      throw new Error(
-        error.response.data.error || error.response.data.message
-      );
-    }
-  },
-  async fetch({ commit }) {
-    try {
-      const { data } = await this.$axios.get('/categories/366');
-      commit("SET_CATEGORIES", data)
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
