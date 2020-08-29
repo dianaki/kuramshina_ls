@@ -9,6 +9,7 @@
     <div v-else class="title">
       <div class="input">
         <app-input
+          :errorMessage="validation.firstError('currentCategory.category')"
           placeholder="Название новой группы"
           :value="value"
           :errorText="errorText"
@@ -31,7 +32,15 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    "currentCategory.category"(value) {
+      return Validator.value(value).required('Обязательно для заполнения')
+    }
+  },
   props: {
     value: {
       type: String,
@@ -47,10 +56,12 @@ export default {
   data() {
     return {
       editmode: this.editModeByDefault,
-      title: this.value
+      title: this.value,
+      currentCategory: {...this.category}
     };
   },
   methods: {
+    ...mapActions("categories", ['removeCategory', 'editCategory']),
     onApprove() {
       if (this.value.trim() === "") return false;
       if (this.title.trim() === this.value.trim()) {
@@ -59,6 +70,19 @@ export default {
         this.$emit("approve", this.value);
       }
     },
+    async removeCurrentCategory() {
+      try {
+        await this.removeCategory(this.category);
+      } catch (error) {
+        
+      }
+    },
+    async changeCurrentCategory() {
+      if(await this.$validate("currentCategory.category") === false);
+      this.currentCategory = {...this.category};
+      this.efitMode = false;
+      return;
+    }
   },
   components: {
     icon: () => import("components/icon"),

@@ -6,6 +6,15 @@ export default {
   mutations: {
     SET_CATEGORIES: (state, categoties) => (state.data = categoties),
     ADD_CATEGORY: (state, category) => state.data.unshift(category),
+    REMOVE_CATEGORY: (state, removedCategoryId) => {
+      state.data = state.data.filter(
+        category => category.id !== removedCategoryId);
+    },
+    EDIT_CATEGORY: (state, editedCategory) => {
+      state.data = state.data.map(category => {
+        return category.id === editedCategory.id ? editedCategory : category;
+      })
+    },
     ADD_SKILL: (state, newSkill) => {
       state.data = state.data.map(category => {
         if (category.id === newSkill.category) {
@@ -36,25 +45,48 @@ export default {
         return category;
       }
       state.data = state.data.map(findCategory);
-    }
+    },
   },
+
   actions: {
-    async create({commit}, title) {
+    async create({ commit }, title) {
       try {
-        const {data} = await this.$axios.post('/categories', {title});
+        const { data } = await this.$axios.post('/categories', { title });
         commit("ADD_CATEGORY", data);
       } catch (error) {
         throw new Error("Произошла ошибка");
       }
     },
-    async fetch({commit}) {
+    async editCategory({ commit }, category) {
       try {
-        const {data} = await this.$axios.get('/categories/366');
-        commit("SET_CATEGORIES", data)
-        console.log(response);
+        const response = await this.$axios.post(`/categories/${category.id}`, category);
+        commit('EDIT_CATEGORY', response, data.category);
+        return response;
       } catch (error) {
-        console.log(error);
+        throw new Error(
+          error.response.data.error || error.response.data.message
+        );
       }
-    }   
+    }
+  },
+  async removeCategory({ commit }, categoryId) {
+    try {
+      const response = await this.$axios.delete(`/categories/${category.id}`);
+      commit("REMOVE_CATEGORY", categoryId);
+      return response;
+    } catch (error) {
+      throw new Error(
+        error.response.data.error || error.response.data.message
+      );
+    }
+  },
+  async fetch({ commit }) {
+    try {
+      const { data } = await this.$axios.get('/categories/366');
+      commit("SET_CATEGORIES", data)
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
