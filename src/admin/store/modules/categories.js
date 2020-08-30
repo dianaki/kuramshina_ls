@@ -59,8 +59,8 @@ export default {
     },
     async editCategory({ commit }, editedCategory) {
       try {
-        const {data} = await this.$axios.post(`/categories/${editedCategory.id}`, {title});
-        commit('EDIT_CATEGORY', data.category, {root:true});
+        const {data} = await this.$axios.post(`/categories/${editedCategory.id}`, {title: editedCategory.title});
+        commit('EDIT_CATEGORY', data);
       } catch (error) {
         throw new Error("Произошла ошибка");
       }
@@ -71,9 +71,7 @@ export default {
         commit("REMOVE_CATEGORY", categoryId);
         return response;
       } catch (error) {
-        throw new Error(
-          error.response.data.error || error.response.data.message
-        );
+        throw new Error("Произошла ошибка");
       }
     },
     async fetch({commit}) {

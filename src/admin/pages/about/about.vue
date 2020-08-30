@@ -112,9 +112,9 @@ export default {
       
     },
 
-    async editCategory(categoryTitle) {
+    async editCategory(category) {
       try {
-        await this.editCategoryAction(categoryTitle);
+        await this.editCategoryAction(category);
         this.showTooltip({
           type: "success",
           text: "Категория изменена"
@@ -125,10 +125,6 @@ export default {
           text: error.message
         })
       }
-    },
-    cancelEditing(){
-        this.editmode = false;
-        this.currentCategory = {...this.category};
     },
     removeSkill(skill) {
       try {
