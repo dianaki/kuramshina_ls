@@ -74,6 +74,7 @@ export default {
 
       showTooltip: "tooltips/show",
     }),
+
     async createSkill(skill, categoryId) {
       try{
         const newSkill = {
@@ -90,7 +91,7 @@ export default {
       } catch (error) {
         this.showTooltip({
           text: error.mesage,
-          type: "error"
+          type: "error",
         })
       }
     },
@@ -169,6 +170,10 @@ export default {
       try {
         await this.createCategoryAction(categoryTitle);
         this.emptyCategoryShow = false;
+        this.showTooltip({
+          type: "success",
+          text: "Категория создана"
+        })
       } catch (error) {
         this.showTooltip({
           type: "error",
@@ -176,9 +181,9 @@ export default {
         })
       }
     },
-    created() {
-      this.fetchCategoriesAction();
-    },
+  },
+  created() {
+    this.fetchCategoriesAction();
   },
 };
 </script>
