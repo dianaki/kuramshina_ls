@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     onApprove() {
-      this.$validate().then(seccess => {
-        if (!seccess) return;
+      this.$validate().then(success => {
+        if (!success) return;
         if (this.title.trim() === this.value.trim()) {
           this.editmode = false;
         } else {

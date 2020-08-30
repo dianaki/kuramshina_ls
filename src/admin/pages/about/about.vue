@@ -28,7 +28,7 @@
               @create-skill="createSkill($event, category.id)"
               @edit-skill="editSkill"
               @remove-skill="removeSkill"
-              @edit-category="editCategory($event, category.id)"
+              @approve="editCategory($event, category.id)"
               @remove-category="removeCategory($event, category.id)"
             />
           </li>
@@ -112,13 +112,9 @@ export default {
       
     },
 
-    async editCategory(categoryTitle, categoryId) {
+    async editCategory(categoryTitle) {
       try {
-        const newCategory = {
-          categoryTitle,
-          categoryId: categoryId,
-        }
-        await this.editCategoryAction(newCategory);
+        await this.editCategoryAction(categoryTitle);
         this.showTooltip({
           type: "success",
           text: "Категория изменена"
@@ -126,7 +122,7 @@ export default {
       } catch (error) {
         this.showTooltip({
           type: "error",
-          text: error.mesage
+          text: error.message
         })
       }
     },
