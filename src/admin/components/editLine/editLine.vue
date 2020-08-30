@@ -9,7 +9,7 @@
     <div v-else class="title">
       <div class="input">
         <app-input
-          v-model="category.title"
+          v-model="categoryTitle"
           placeholder="Название новой группы"
           :value="value"
           :errorText="errorText"
@@ -17,6 +17,7 @@
           @keydown.native.enter="onApprove"
           autofocus="autofocus"
           no-side-paddings="no-side-paddings"
+          :errorMessage="validation.firstError('categoryTitle')"
         ></app-input>
       </div>
       <div class="buttons">
@@ -24,7 +25,7 @@
           <icon symbol="tick" @click="onApprove"></icon>
         </div>
         <div class="button-icon">
-          <icon symbol="cross" @click="$emit('remove', category.id)"></icon>
+          <icon symbol="cross" @click="$emit('remove', $event)"></icon>
         </div>
       </div>
     </div>
@@ -34,10 +35,11 @@
 <script>
 import {mapActions} from "vuex";
 import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
+
 export default {
   mixins: [ValidatorMixin],
   validators: {
-    "category.title"(value) {
+    "categoryTitle"(value) {
       return Validator.value(value).required('Обязательно для заполнения')
     }
   },
@@ -57,10 +59,7 @@ export default {
     return {
       editmode: this.editModeByDefault,
       title: this.value,
-      category: {
-        title: "",
-        id: "",
-      }
+      categoryTitle: ""
     };
   },
   methods: {
@@ -71,6 +70,7 @@ export default {
           this.editmode = false;
         } else {
           this.$emit("approve", this.value);
+          this.editmode = false;
         }
       })
     },

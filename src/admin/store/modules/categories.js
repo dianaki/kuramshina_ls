@@ -4,11 +4,11 @@ export default {
     data: [],
   },
   mutations: {
-    SET_CATEGORIES: (state, categoties) => (state.data = categoties),
+    SET_CATEGORIES: (state, categories) => (state.data = categories),
     ADD_CATEGORY: (state, category) => state.data.unshift(category),
-    REMOVE_CATEGORY: (state, removedCategoryId) => {
+    REMOVE_CATEGORY: (state, categoryId) => {
       state.data = state.data.filter(
-        category => category.id !== removedCategoryId);
+        category => category.id !== categoryId);
     },
     EDIT_CATEGORY: (state, editedCategory) => {
       state.data = state.data.map(category => {
@@ -59,8 +59,8 @@ export default {
     },
     async editCategory({ commit }, category) {
       try {
-        const response = await this.$axios.post(`/categories/${category.id}`, category);
-        commit('EDIT_CATEGORY', category);
+        const {data} = await this.$axios.post(`/categories/${categoryId}`, {title: category.cetegoryTitle});
+        commit('EDIT_CATEGORY', data);
         return response;
       } catch (error) {
         throw new Error(
@@ -70,7 +70,7 @@ export default {
     },
     async removeCategory({ commit }, categoryId) {
       try {
-        const response = await this.$axios.delete(`/categories/${category.id}`);
+        const {data} = await this.$axios.delete(`/categories/${categoryId}`);
         commit("REMOVE_CATEGORY", categoryId);
         return response;
       } catch (error) {
@@ -79,14 +79,12 @@ export default {
         );
       }
     },
-    async fetch({ commit }) {
+    async fetch({commit}) {
       try {
-        const { data } = await this.$axios.get('/categories/366');
+        const {data} = await this.$axios.get('/categories/366');
         commit("SET_CATEGORIES", data)
       } catch (error) {
-        throw new Error(
-          error.responce.data.error || error.responce.data.message
-        )
+        console.log(error);
       }
     },
   },

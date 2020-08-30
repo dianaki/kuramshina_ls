@@ -13,10 +13,8 @@
         <ul class="skills">
           <li class="item" v-if="emptyCategoryShow">
             <category 
-              @remove="emptyCategoryShow = false"
+              @remove-category="emptyCategoryShow = false"
               @approve="createCategory"
-              @edit-category="editCategory"
-              @remove-category="removeCategory"
               empty 
             />
           </li>
@@ -30,6 +28,8 @@
               @create-skill="createSkill($event, category.id)"
               @edit-skill="editSkill"
               @remove-skill="removeSkill"
+              @edit-category="editCategory($event, category.id)"
+              @remove-category="removeCategory($event, category.id)"
             />
           </li>
         </ul>
@@ -47,7 +47,6 @@ import category from "../../components/category";
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: 'about',
   components: {
     iconedButton: button,
     category,
@@ -55,7 +54,7 @@ export default {
   data() {
     return {
       emptyCategoryShow: false,
-    }
+    };
   },
   computed: {
     ...mapState("categories", {
@@ -72,32 +71,98 @@ export default {
       addSkillAction: "skills/add",
       removeSkillAction: "skills/remove",
       editSkillAction: "skills/edit",
+
+      showTooltip: "tooltips/show",
     }),
     async createSkill(skill, categoryId) {
-      const newSkill = {
+      try{
+        const newSkill = {
         ...skill,
         category: categoryId,
       };
       await this.addSkillAction(newSkill);
       skill.title = "";
       skill.percent = "";
+      this.showTooltip({
+        text: "Навык добавлен",
+        type: "success"
+      })
+      } catch (error) {
+        this.showTooltip({
+          text: error.mesage,
+          type: "error"
+        })
+      }
     },
 
-    removeCategory(category) {
-      this.removeCategoryAction(category);
+    removeCategory(event, categoryId) {
+      try {
+        this.removeCategoryAction(categoryId);
+        this.showTooltip({
+          type: "success",
+          text: "Категория удалена"
+        })
+      } catch (error) {
+        this.showTooltip({
+          text: error.message,
+          type: "error"
+        })
+      }
+      
     },
 
-    editCategory(category) {
-      this.editCategoryAction(category);
+    async editCategory(categoryTitle, categoryId) {
+      try {
+        const newCategory = {
+          categoryTitle,
+          categoryId: categoryId,
+        }
+        await this.editCategoryAction(newCategory);
+        this.showTooltip({
+          type: "success",
+          text: "Категория изменена"
+        })
+      } catch (error) {
+        this.showTooltip({
+          type: "error",
+          text: error.mesage
+        })
+      }
     },
-
+    cancelEditing(){
+        this.editmode = false;
+        this.currentCategory = {...this.category};
+    },
     removeSkill(skill) {
-      this.removeSkillAction(skill);
+      try {
+        this.removeSkillAction(skill);
+        this.showTooltip({
+          type: "success",
+          text: "Навык удален"
+        })
+      } catch (error) {
+        this.showTooltip({
+          type: "error",
+          text: error.mesage
+        })
+      }
     },
 
     async editSkill (skill) {
-      await this.editSkillAction(skill);
-      skill.editmode = false;
+      try {
+        await this.editSkillAction(skill);
+        skill.editmode = false;
+        this.showTooltip({
+          type: "success",
+          text: "Навык изменен"
+        })
+      } catch (error) {
+        this.showTooltip({
+          type: "error",
+          text: error.message
+        })
+      }
+     
     },
   
     async createCategory(categoryTitle) {
@@ -105,14 +170,17 @@ export default {
         await this.createCategoryAction(categoryTitle);
         this.emptyCategoryShow = false;
       } catch (error) {
-        console.log(error.message)
+        this.showTooltip({
+          type: "error",
+          text: error.message
+        })
       }
-    }
+    },
+    created() {
+      this.fetchCategoriesAction();
+    },
   },
-  created() {
-    this.fetchCategoriesAction();
-  }
-}
+};
 </script>
 
 <style lang="postcss" scoped>
