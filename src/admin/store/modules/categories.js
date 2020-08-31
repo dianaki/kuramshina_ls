@@ -64,7 +64,7 @@ export default {
     },
     async editCategory({ commit }, editedCategory) {
       try {
-        const {data} = await this.$axios.post(`/categories/${editedCategory.id}`, {title: editedCategory.title});
+        const { data } = await this.$axios.post(`/categories/${editedCategory.id}`, { title: editedCategory.title });
         commit('EDIT_CATEGORY', data.category);
       } catch (error) {
         throw new Error("Произошла ошибка");
@@ -72,21 +72,22 @@ export default {
     },
     async removeCategory({ commit }, categoryId) {
       try {
-        const {data} = await this.$axios.delete(`/categories/${categoryId}`);
+        const { data } = await this.$axios.delete(`/categories/${categoryId}`);
         commit("REMOVE_CATEGORY", categoryId);
         return response;
       } catch (error) {
         throw new Error("Произошла ошибка");
       }
     },
-    async fetch({commit}) {
+    async fetch({ commit, rootState }) {
       try {
-        const {data} = await this.$axios.get('/categories/366');
+        const v = await this.dispatch('user/fetch')
+        const userId = rootState.user.user.id
+        const { data } = await this.$axios.get(`/categories/${userId}`);
         commit("SET_CATEGORIES", data)
       } catch (error) {
-        console.log(error);
         throw new Error("Произошла ошибка");
       }
     },
   },
-}
+};

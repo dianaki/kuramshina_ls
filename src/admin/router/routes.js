@@ -1,12 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-Vue.use(VueRouter);
+import header from "../components/header";
+import about from "../pages/about";
+import login from "../pages/login";
 
-import header from "./components/header";
-import about from "./pages/about";
-import login from "./pages/login";
-import works from "./pages/works";
+Vue.use(VueRouter);
 
 const routes = [
   {

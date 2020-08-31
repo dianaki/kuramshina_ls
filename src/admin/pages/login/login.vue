@@ -71,9 +71,10 @@ export default {
     async handleSubmit() {
       if ((await this.$validate()) === false) return;
       try {
-        const response = await $axios.post('/login', this.user)
+        const {
+          data: {token},
+        } = await $axios.post('/login', this.user)
       
-        const token = response.data.token;
         localStorage.setItem("token", token);
         $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
         this.$router.replace('/');
