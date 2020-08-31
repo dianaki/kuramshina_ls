@@ -78,6 +78,11 @@ export default {
         $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
         this.$router.replace('/');
 
+        this.showTooltip({
+          type: "success",
+          text: "Добро пожаловать"
+        })
+
       } catch (error) {
         this.showTooltip({
           text: error.response.data.error,

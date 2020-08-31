@@ -59,7 +59,7 @@ export default {
     return {
       editmode: this.editModeByDefault,
       title: this.value,
-      categoryTitle: ""
+      categoryTitle: this.value
     };
   },
   methods: {

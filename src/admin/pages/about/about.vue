@@ -112,9 +112,12 @@ export default {
       
     },
 
-    async editCategory(category) {
+    async editCategory(title, id) {
       try {
-        await this.editCategoryAction(category);
+        await this.editCategoryAction({
+          title,
+          id,
+        });
         this.showTooltip({
           type: "success",
           text: "Категория изменена"
