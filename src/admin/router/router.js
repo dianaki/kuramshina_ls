@@ -2,22 +2,34 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
 import routes from "./routes";
-import $axios from "../requests";
+import axios from "axios";
 
 Vue.use(VueRouter);
+
 const router = new VueRouter({ routes });
 
-router.beforeEach(async (to, from, next) => {
-  const token = localStorage.getItem('token');
+const guard = axios.create({
+  baseURL: "https://webdev-api.loftschool.com/"
+});
 
-  if (token) {
-    $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+router.beforeEach(async (to, from, next) => {
+  const isPublicRoute = to.matched.some(route => route.meta.public);
+	const isUserLoggedIn = store.getters["user/userIsLoggedIn"];
+
+  if (isPublicRoute === false && isUserLoggedIn === false) {
+		const token = localStorage.getItem("token");
+
+    guard.defaults.headers["Authorization"] = `Bearer ${token}`;
 
     try {
-      await store.dispatch("user/fetch");
+      const response = await guard.get("/user"); 
+      store.dispatch("user/login", await response.data.user)
+      next();
     } catch (error) {
-      localStorage.removeItem("token");
+      router.replace("/");
+      localStorage.removeItem("token"); 
     }
+  } else {
     next();
   }
 });

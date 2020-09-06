@@ -1,23 +1,36 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import header from "../components/header";
-import about from "../pages/about";
-import login from "../pages/login";
-
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/about',
     components: {
-      default: about,
-      header: header,
+      default: () => import("../pages/about"),
+      header: () => import("../components/header")
     },
   },
   {
-    path: '/login',
-    component: login
+    path: '/',
+    component: () => import("../pages/login"),
+    meta: {
+      public: true,
+    }
+  },
+  {
+    path: '/works',
+    components: {
+      default: () => import("../pages/works"),
+      header: () => import("../components/header")
+    },
+  },
+  {
+    path: '/reviews',
+    components: {
+      default: () => import("../pages/reviews"),
+      header: () => import("../components/header")
+    },
   },
 ];
 

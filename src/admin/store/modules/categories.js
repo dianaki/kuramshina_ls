@@ -81,7 +81,6 @@ export default {
     },
     async fetch({ commit, rootState }) {
       try {
-        const v = await this.dispatch('user/fetch')
         const userId = rootState.user.user.id
         const { data } = await this.$axios.get(`/categories/${userId}`);
         commit("SET_CATEGORIES", data)

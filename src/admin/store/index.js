@@ -7,6 +7,7 @@ import categories from "./modules/categories";
 import skills from "./modules/skills";
 import user from "./modules/user";
 import tooltips from "./modules/tooltips";
+import works from "./modules/works";
 
 export default new Vuex.Store({
   modules: {
@@ -14,5 +15,6 @@ export default new Vuex.Store({
     user,
     skills,
     tooltips,
+    works,
   }
 })

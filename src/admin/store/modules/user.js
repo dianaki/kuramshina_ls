@@ -3,24 +3,30 @@ export default {
   state: {
     user: null,
   },
+
   mutations: {
     SET_USER: (state, user) => {
       state.user = user;
     },
+    CLEAR_USER: state => (state.user = {})
   },
-  actions: {
-    async fetch(context) {
-      try {
-        const {
-          data: { user },
-        } = await this.$axios.get('/user');
 
-        console.log("user fetch invoked");
-        context.commit("SET_USER", user);
-      } catch (error) {
-        console.log(error);
-      }
+  actions: {
+    login({ commit }, user) {
+      commit("SET_USER", user);
+		
     },
+    logout({ commit }) {
+      localStorage.removeItem('token');
+      location.reload();
+    }
   },
-  getters: {},
+
+  getters: {
+    userIsLoggedIn: state => {
+      const userObj = state.user;
+      const userObjIsEmpty = Object.keys(userObj).length === 0 && userObj.constructor === Object
+      return userObjIsEmpty === false;
+    }
+  },
 };
