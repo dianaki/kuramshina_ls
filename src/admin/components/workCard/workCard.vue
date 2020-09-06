@@ -45,9 +45,23 @@ export default {
   methods: {
     ...mapActions({
       removeWorkAction: "works/remove",
+
+      showTooltip: "tooltips/show",
     }),
+
     async removeWork() {
-      await this.removeWorkAction(this.work.id);
+      try {
+        await this.removeWorkAction(this.work.id);
+        this.showTooltip({
+          type: "success",
+          text: "Работа удалена"
+        })
+      } catch (error) {
+        this.showTooltip({
+          type: "error",
+          text: error.mesage
+        })
+      }
     }
   },
 };

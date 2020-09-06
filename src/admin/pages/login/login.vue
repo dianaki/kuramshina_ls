@@ -81,7 +81,7 @@ export default {
         const userResponse = await $axios.get("/user");
         this.login(userResponse.data.user);
 
-        this.$router.replace('/about');
+        this.$router.replace('/');
 
         this.showTooltip({
           type: "success",

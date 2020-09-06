@@ -1,15 +1,45 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "../store";
-import routes from "./routes";
+import store from "./store";
 import axios from "axios";
 
 Vue.use(VueRouter);
 
+const routes = [
+  {
+    path: '/',
+    components: {
+      default: () => import("./pages/about"),
+      header: () => import("./components/header")
+    },
+  },
+  {
+    path: '/login',
+    component: () => import("./pages/login"),
+    meta: {
+      public: true,
+    }
+  },
+  {
+    path: '/works',
+    components: {
+      default: () => import("./pages/works"),
+      header: () => import("./components/header")
+    },
+  },
+  {
+    path: '/reviews',
+    components: {
+      default: () => import("./pages/reviews"),
+      header: () => import("./components/header")
+    },
+  },
+];
+
 const router = new VueRouter({ routes });
 
 const guard = axios.create({
-  baseURL: "https://webdev-api.loftschool.com/"
+  baseURL: "https://webdev-api.loftschool.com"
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -26,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
       store.dispatch("user/login", await response.data.user)
       next();
     } catch (error) {
-      router.replace("/");
+      router.replace("/login");
       localStorage.removeItem("token"); 
     }
   } else {

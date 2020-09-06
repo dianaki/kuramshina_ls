@@ -1,20 +1,17 @@
 export default {
   namespaced: true,
   state: {
-    user: null,
+    user: {}
   },
 
   mutations: {
-    SET_USER: (state, user) => {
-      state.user = user;
-    },
+    SET_USER: (state, user) => (state.user = user),
     CLEAR_USER: state => (state.user = {})
   },
 
   actions: {
-    login({ commit }, user) {
+    login({ commit}, user) {
       commit("SET_USER", user);
-		
     },
     logout({ commit }) {
       localStorage.removeItem('token');
