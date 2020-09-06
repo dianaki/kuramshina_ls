@@ -2,6 +2,7 @@
   <button 
     v-on="$listeners"
     class="button-component"
+    type="submit"
   >{{title}}</button>
 </template>
 

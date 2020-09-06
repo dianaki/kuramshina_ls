@@ -4,10 +4,11 @@
       slot="title" 
       v-model="categoryTitle" 
       :editModeByDefault="empty"
-      @remove="$emit('remove', $event)"
+      @remove="$emit('remove-category', $event)"
+      @approve="$emit('approve', $event)"
     />
     <template slot="content">
-      <ul class="skills" v-if="empty === false" slot="content">
+      <ul class="skills" v-if="empty === false">
         <li class="item" v-for="skill in skills" :key="skill.id">
           <skill 
           :skill="skill" 
@@ -17,7 +18,9 @@
         </li>
       </ul>
       <div class="bottom-line">
-        <skill-add-line :blocked="empty" />
+        <skill-add-line 
+        @approve="$emit('create-skill', $event)"
+        :blocked="empty" />
       </div>
     </template>
   </card>
@@ -29,10 +32,11 @@ import editLine from "../editLine";
 import skill from "../skill";
 import skillAddLine from "../skillAddLine";
 
-
 export default {
   components: {
-    card, editLine, skill,
+    card, 
+    editLine, 
+    skill,
     skillAddLine
   },
   props: {
@@ -48,7 +52,7 @@ export default {
   },
   data() {
     return {
-      categoryTitle: this.title
+      categoryTitle: this.title,
     }
   }
 }
