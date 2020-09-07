@@ -2,7 +2,6 @@ export default {
   namespaced: true,
   state: {
     data: [],
-    user: {},
   },
 
   mutations: {
@@ -15,6 +14,11 @@ export default {
     SET_WORKS(state, works) {
       state.data = works
     },
+    EDIT_WORK: (state, editWork) => {
+      state.data = state.data.map(work => {
+        return work.id === editWork.work.id ? editWork.work : work
+      })
+    }
   },
   actions: {
     async add({commit}, newWork) {
@@ -23,11 +27,6 @@ export default {
       Object.keys(newWork).forEach(item => {
         formData.append(item, newWork[item]);
       })
-
-      // for(let entry of formData.entries()) {
-      //   console.log(entry);
-      // }
-
       try {
         const {data} = await this.$axios.post('/works', formData);
         commit('ADD_WORK', data);
@@ -45,6 +44,21 @@ export default {
       }
     },
 
+    async edit({commit}, editWork) {
+      const formData = new FormData();
+
+      Object.keys(editWork).forEach(item => {
+        formData.append(item, editWork[item]);
+      })
+
+      try {
+        const {data} = await this.$axios.post(`/works/${editWork.id}`, formData);
+        commit('EDIT_WORK', data);
+      } catch (error) {
+        console.log(error);
+      }      
+    },
+
     async fetch({commit, rootState}) {
       try {
         const userId = rootState.user.user.id
@@ -55,9 +69,4 @@ export default {
       }
     }
   },
-  getters: {
-    getUserId: state => {
-      return state.user.id;
-    }
-  }
 }

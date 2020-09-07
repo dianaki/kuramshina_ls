@@ -7,13 +7,25 @@
             Блок "Работы"
           </div>
         </div>
-        <div class="form">
-          <app-form />
+        <div class="form" v-if="formIsShown || Object.keys(this.currentWork).length !== 0">
+          <app-form 
+          @reset-handler="resetHandler"
+          :form-title="formTitle"
+          :edit-work-data="currentWork"
+          />
         </div>
         <ul class="cards">
-          <li class="item" v-for="work in works" :key="work.id">
+          <li class="item">
+            <square-btn
+            type="square"
+            title="Добавить работу"
+            @click="shownForm"
+            />
+          </li>
+          <li :class="['item', {'edit-work': isCurrentWork(work)}]" v-for="work in works" :key="work.id">
             <work-card
               :work="work"
+              @edit-work="editWork(work)"
             />
           </li>
         </ul>
@@ -23,6 +35,7 @@
 </template>
 
 <script>
+import squareBtn from "../../components/button"
 import appForm from '../../components/form';
 import workCard from "../../components/workCard";
 
@@ -32,6 +45,14 @@ export default {
   components: {
     appForm,
     workCard,
+    squareBtn
+  },
+  data() {
+    return {
+      currentWork: {},
+      formIsShown: false,
+      formTitle: "Добавление работы"
+    }
   },
   computed: {
     ...mapState("works", {
@@ -40,8 +61,27 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchWorks: "works/fetch"
+      fetchWorks: "works/fetch",
     }),
+
+    shownForm() {
+      this.formIsShown = !this.formIsShown;
+    },
+
+    resetHandler() {
+      this.formIsShown = false;
+      this.currentWork = {};
+      this.formTitle = "Добавление работы";
+    },
+
+    editWork(work) {
+      this.formTitle = "Редактирование работы"
+      this.currentWork = work;
+    },
+
+    isCurrentWork(work) {
+      return work.id === this.currentWork.id;
+    },
   },
   mounted() {
     this.fetchWorks();

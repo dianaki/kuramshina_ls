@@ -2,13 +2,13 @@
 <template>
   <div class="form-component">
     <form class="form" @submit.prevent="handleSubmit">
-      <card title="Добавление работы">
+      <card :title="formTitle">
         <div class="form-container" slot="content">
           <div class="form-cols">
             <div class="form-col">
               <label
-                :style="{backgroundImage: `url(${newWork.preview})`}"
-                :class="['uploader', {active: newWork.preview}, {
+                :style="{backgroundImage: `url(${preview})`}"
+                :class="['uploader', {active: preview}, {
                   hovered: hovered
                 }]"
                 @dragover="handleDragOver"
@@ -38,7 +38,7 @@
           </div>
           <div class="form-btns">
             <div class="btn">
-              <app-button title="Отмена" plain></app-button>
+              <app-button title="Отмена" @click="$emit('reset-handler')"  plain></app-button>
             </div>
             <div class="btn">
               <app-button title="Сохранить" typeAttr="submit"></app-button>
@@ -56,16 +56,21 @@ import appButton from "../button";
 import appInput from "../input";
 import tagsAdder from "../tagsAdder";
 import { mapActions } from "vuex";
+
 export default {
   components: { 
     card, 
     appButton, 
     appInput, 
     tagsAdder,
-    },
+  },
+  props: {
+    formTitle: String,
+  },
   data() {
     return {
       hovered: false,
+      preview: "",
       newWork: {
         title: "",
         link: "",
@@ -77,27 +82,32 @@ export default {
   },
   methods: {
     ...mapActions({
-      addNewWork: "works/add",
+      addNewWorkAction: "works/add",
+      editWorkAction: "works/edit",
+
       showTooltip: "tooltips/show",
     }),
+
     handleDragOver(e) {
       e.preventDefault();
       this.hovered = true;
     },
+
     async handleSubmit() {
+      await this.addNewWorkAction(this.newWork);
       try {
-        await this.addNewWork(this.newWork);
         this.showTooltip({
-        text: "Навык добавлен",
-        type: "success"
-      })
+          type: "success",
+          text: "Работа добавлена"
+        })
       } catch (error) {
         this.showTooltip({
-          text: error.mesage,
           type: "error",
+          text: error.mesage
         })
-      } 
+      }   
     },
+    
     handleChange(event) {
       event.preventDefault();
       const file = event.dataTransfer 
@@ -111,7 +121,7 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        this.newWork.preview = reader.result;
+        this.preview = reader.result;
       };
     },
   },
