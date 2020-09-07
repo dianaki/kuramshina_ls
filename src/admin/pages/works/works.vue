@@ -10,6 +10,7 @@
         <div class="form" v-if="formIsShown || Object.keys(this.currentWork).length !== 0">
           <app-form 
           @reset-handler="resetHandler"
+          :currentWork="currentWork"
           :form-title="formTitle"
           :edit-work-data="currentWork"
           />
@@ -122,5 +123,6 @@ export default {
 .item {
   width: calc(100% / 3 - 20px);
   margin-left: 20px;
+  margin-bottom: 28px;
 }
 </style>

@@ -66,6 +66,10 @@ export default {
   },
   props: {
     formTitle: String,
+    currentWork: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data() {
     return {
@@ -80,6 +84,23 @@ export default {
       },
     };
   },
+
+  watch: {
+    currentWork() {
+      if(Object.keys(this.currentWork)) {
+        this.newWork = {...this.currentWork};
+        this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
+      }
+    }
+  },
+
+  created() {
+    if(Object.keys(this.currentWork)) {
+      this.newWork = {...this.currentWork};
+      this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
+    }
+  },
+
   methods: {
     ...mapActions({
       addNewWorkAction: "works/add",
@@ -94,18 +115,34 @@ export default {
     },
 
     async handleSubmit() {
-      await this.addNewWorkAction(this.newWork);
-      try {
-        this.showTooltip({
-          type: "success",
-          text: "Работа добавлена"
-        })
-      } catch (error) {
-        this.showTooltip({
-          type: "error",
-          text: error.mesage
-        })
-      }   
+      this.$emit('reset-handler');
+      if (this.newWork.id) {
+        await this.editWorkAction(this.newWork);
+        try {
+          this.showTooltip({
+            type: "success",
+            text: "Работа изменена"
+          })
+        } catch (error) {
+          this.showTooltip({
+            type: "error",
+            text: error.mesage
+          })
+        } 
+      } else {
+        await this.addNewWorkAction(this.newWork);
+        try {
+          this.showTooltip({
+            type: "success",
+            text: "Работа добавлена"
+          })
+        } catch (error) {
+          this.showTooltip({
+            type: "error",
+            text: error.mesage
+          })
+        }
+      }  
     },
     
     handleChange(event) {
