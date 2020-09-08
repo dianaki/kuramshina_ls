@@ -1,44 +1,38 @@
-  
 <template>
   <div class="form-component">
     <form class="form" @submit.prevent="handleSubmit">
-      <card :title="formTitle">
+      <card :title='formTitle'>
         <div class="form-container" slot="content">
           <div class="form-cols">
             <div class="form-col">
-              <label
-                :style="{backgroundImage: `url(${preview})`}"
-                :class="['uploader', {active: preview}, {
-                  hovered: hovered
-                }]"
-                @dragover="handleDragOver"
-                @dragleave="hovered = false"
-                @drop="handleChange"
-              >
-                <div class="uploader-title">Перетащите или загрузите картинку</div>
+              <label>
+                <div
+                  :style="{backgroundImage: `url(${preview})`}"
+                  :class="[ 'uploader', {active: preview}, {hovered: hovered}]"
+                  @dragover="handleDragOver"
+                  @dragleave="hovered = false"
+                  @drop="handleChange"
+                >
+                  <div class="uploader-user-icon" v-if="Object.keys(newReview).length === 0"></div>
+                </div>
                 <div class="uploader-btn">
-                  <app-button typeAttr="file" @change="handleChange"></app-button>
+                  <app-button plain title="Добавить фото" typeAttr="file" @change="handleChange"></app-button>
                 </div>
               </label>
             </div>
-            <div class="form-col">
+            <div class="form-col from-col-text">
               <div class="form-row">
-                <app-input v-model="newWork.title" title="Название" />
+                <app-input v-model="newReview.author" title="Имя автора" />
+                <app-input v-model="newReview.occ" title="Титул автора" />
               </div>
               <div class="form-row">
-                <app-input v-model="newWork.link" title="Ссылка" />
-              </div>
-              <div class="form-row">
-                <app-input v-model="newWork.description" field-type="textarea" title="Описание" />
-              </div>
-              <div class="form-row">
-                <tags-adder v-model="newWork.techs" />
+                <app-input v-model="newReview.text" field-type="textarea" title="Отзыв" />
               </div>
             </div>
           </div>
           <div class="form-btns">
             <div class="btn">
-              <app-button title="Отмена" @click="$emit('reset-handler')"  plain></app-button>
+              <app-button title="Отмена" @click.prevent="$emit('reset-handler')" plain></app-button>
             </div>
             <div class="btn">
               <app-button title="Сохранить" typeAttr="submit"></app-button>
@@ -54,19 +48,16 @@
 import card from "../Card";
 import appButton from "../button";
 import appInput from "../input";
-import tagsAdder from "../tagsAdder";
 import { mapActions } from "vuex";
-
 export default {
   components: { 
     card, 
     appButton, 
-    appInput, 
-    tagsAdder,
+    appInput
   },
   props: {
     formTitle: String,
-    currentWork: {
+    currentReview: {
       type: Object,
       default: () => ({})
     }
@@ -75,36 +66,32 @@ export default {
     return {
       hovered: false,
       preview: "",
-      newWork: {
-        title: "",
-        link: "",
-        description: "",
-        techs: "",
+      newReview: {
+        author: "",
+        occ: "",
+        text: "",
         photo: {},
       },
     };
   },
-
   watch: {
-    currentWork() {
-      if(Object.keys(this.currentWork)) {
-        this.newWork = {...this.currentWork};
-        this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
+    currentReview() {
+      if(Object.keys(this.currentReview)) {
+        this.newReview = {...this.currentReview};
+        this.preview = `https://webdev-api.loftschool.com/${this.currentReview.photo}`
       }
     }
   },
-
   created() {
-    if(Object.keys(this.currentWork)) {
-      this.newWork = {...this.currentWork};
-      this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
+    if(Object.keys(this.currentReview)) {
+      this.newReview = {...this.currentReview};
+      this.preview = `https://webdev-api.loftschool.com/${this.currentReview.photo}`
     }
   },
-
   methods: {
     ...mapActions({
-      addNewWorkAction: "works/add",
-      editWorkAction: "works/edit",
+      addNewReviewAction: "reviews/add",
+      editReviewAction: "reviews/edit",
 
       showTooltip: "tooltips/show",
     }),
@@ -116,12 +103,12 @@ export default {
 
     async handleSubmit() {
       this.$emit('reset-handler');
-      if (this.newWork.id) {
-        await this.editWorkAction(this.newWork);
+      if (this.newReview.id) {
+        await this.editReviewAction(this.newReview);
         try {
           this.showTooltip({
             type: "success",
-            text: "Работа изменена"
+            text: "Отзыв изменен"
           })
         } catch (error) {
           this.showTooltip({
@@ -130,11 +117,11 @@ export default {
           })
         } 
       } else {
-        await this.addNewWorkAction(this.newWork);
+        await this.addNewReviewAction(this.newReview);
         try {
           this.showTooltip({
             type: "success",
-            text: "Работа добавлена"
+            text: "Отзыв добавлен"
           })
         } catch (error) {
           this.showTooltip({
@@ -150,7 +137,7 @@ export default {
       const file = event.dataTransfer 
         ? event.dataTransfer.files[0] 
         : event.target.files[0];
-      this.newWork.photo = file;
+      this.newReview.photo = file;
       this.renderPhoto(file);
       this.hovered = false;
     },
@@ -165,4 +152,4 @@ export default {
 };
 </script>
 
-<style src="./form.pcss" lang="postcss" scoped></style>
+<style src="./reviewsForm.pcss" lang="postcss" scoped></style>

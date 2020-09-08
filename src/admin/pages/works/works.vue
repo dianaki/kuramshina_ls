@@ -37,7 +37,7 @@
 
 <script>
 import squareBtn from "../../components/button"
-import appForm from '../../components/form';
+import appForm from '../../components/worksForm';
 import workCard from "../../components/workCard";
 
 import { mapState, mapActions } from "vuex";
