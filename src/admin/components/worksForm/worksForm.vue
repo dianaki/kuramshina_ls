@@ -14,22 +14,32 @@
               >
                 <div class="uploader-title">Перетащите или загрузите картинку</div>
                 <div class="uploader-btn">
-                  <app-button typeAttr="file" @change="handleChange"></app-button>
+                  <app-button typeAttr="file" v-model="newWork.photo"  @change="handleChange"
+                  :errorMessage="validation.firstError('newWork.photo')"
+                  ></app-button>
                 </div>
               </label>
             </div>
             <div class="form-col">
               <div class="form-row">
-                <app-input v-model="newWork.title" title="Название" />
+                <app-input v-model="newWork.title" title="Название" 
+                :errorMessage="validation.firstError('newWork.title')"
+                />
               </div>
               <div class="form-row">
-                <app-input v-model="newWork.link" title="Ссылка" />
+                <app-input v-model="newWork.link" title="Ссылка" 
+                :errorMessage="validation.firstError('newWork.link')"
+                />
               </div>
               <div class="form-row">
-                <app-input v-model="newWork.description" field-type="textarea" title="Описание" />
+                <app-input v-model="newWork.description" field-type="textarea" title="Описание" 
+                :errorMessage="validation.firstError('newWork.description')"
+                />
               </div>
               <div class="form-row">
-                <tags-adder v-model="newWork.techs" />
+                <tags-adder v-model="newWork.techs" 
+                :errorMessage="validation.firstError('newWork.techs')"
+                />
               </div>
             </div>
           </div>
@@ -52,14 +62,35 @@ import card from "../Card";
 import appButton from "../button";
 import appInput from "../input";
 import tagsAdder from "../tagsAdder";
-import { mapActions } from "vuex";
+import tooltip from "../../components/tooltip"
+import { mapActions, mapState } from "vuex";
+import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 
 export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    "newWork.title"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newWork.link"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newWork.description"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newWork.techs"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newWork.photo"(value) {
+      return Validator.value(value).required("Вставьте файл");
+    }
+  },
   components: { 
     card, 
     appButton, 
     appInput, 
     tagsAdder,
+    tooltip,
   },
   props: {
     formTitle: String,
@@ -112,7 +143,9 @@ export default {
     },
 
     async handleSubmit() {
+      if ((await this.$validate()) === false) return; // Проверка валидации
       this.$emit('reset-handler');
+      
       if (this.newWork.id) {
         await this.editWorkAction(this.newWork);
         try {

@@ -15,7 +15,10 @@
     },
     computed: {
       tagsArray() {
-        return this.tags.split(",");
+        const tagsAdder = this.tags.split(",");
+        return tagsAdder.filter(tag => {
+          return tag !== ' ' && tag !== '';
+        })
       }
     }
   }
@@ -24,6 +27,8 @@
 <style scoped lang="postcss">
   ul {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
   li {
     margin-right: 10px;

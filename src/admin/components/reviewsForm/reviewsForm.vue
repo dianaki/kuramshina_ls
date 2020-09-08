@@ -16,17 +16,25 @@
                   <div class="uploader-user-icon" v-if="Object.keys(newReview).length === 0"></div>
                 </div>
                 <div class="uploader-btn">
-                  <app-button plain title="Добавить фото" typeAttr="file" @change="handleChange"></app-button>
+                  <app-button plain title="Добавить фото" v-model="newReview.photo" typeAttr="file" @change="handleChange"
+                  :errorMessage="validation.firstError('newReview.photo')"
+                  ></app-button>
                 </div>
               </label>
             </div>
             <div class="form-col from-col-text">
               <div class="form-row">
-                <app-input v-model="newReview.author" title="Имя автора" />
-                <app-input v-model="newReview.occ" title="Титул автора" />
+                <app-input v-model="newReview.author" title="Имя автора" 
+                :errorMessage="validation.firstError('newReview.author')"
+                />
+                <app-input v-model="newReview.occ" title="Титул автора" 
+                :errorMessage="validation.firstError('newReview.occ')"
+                />
               </div>
               <div class="form-row">
-                <app-input v-model="newReview.text" field-type="textarea" title="Отзыв" />
+                <app-input v-model="newReview.text" field-type="textarea" title="Отзыв" 
+                :errorMessage="validation.firstError('newReview.text')"
+                />
               </div>
             </div>
           </div>
@@ -49,11 +57,29 @@ import card from "../Card";
 import appButton from "../button";
 import appInput from "../input";
 import { mapActions } from "vuex";
+import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
+
 export default {
+  mixins: [ValidatorMixin],
+  validators: {
+    "newReview.author"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newReview.occ"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newReview.text"(value) {
+      return Validator.value(value).required("Заполните поле");
+    },
+    "newReview.photo"(value) {
+      return Validator.value(value).required("Вставьте файл");
+    }
+  },
   components: { 
     card, 
     appButton, 
-    appInput
+    appInput,
+    Validator
   },
   props: {
     formTitle: String,
@@ -102,6 +128,7 @@ export default {
     },
 
     async handleSubmit() {
+       if ((await this.$validate()) === false) return; // Проверка валидации
       this.$emit('reset-handler');
       if (this.newReview.id) {
         await this.editReviewAction(this.newReview);

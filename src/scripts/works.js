@@ -1,13 +1,17 @@
 import Vue from "vue";
+import axios from "axios";
+import config from "../../env.paths.json"
+
+axios.defaults.baseURL = config.BASE_URL;
 
 const thumbs = {
   props: ["works", "currentWork"],
-  template: "#preview-thumbs"
+  template: "#preview-thumbs",
 };
 
 const btns = {
   template: "#preview-btns",
-  props: ["cerrentIndex", "worksLenght"]
+  props: ["currentIndex", "worksLenght"]
 };
 
 const display = {
@@ -33,7 +37,7 @@ const info = {
   components: { tags },
   computed: {
     tagsArray() {
-      return this.currentWork.skills.split(",");
+      return this.currentWork.techs.split(",");
     }
   }
 };
@@ -66,9 +70,9 @@ new Vue({
     },
     requireImagesToArray(data) {
       return data.map(item => {
-        const requiredImage = require(`../images/content/${item.photo}`).default;
+        const requiredImage = `https://webdev-api.loftschool.com/${item.photo}`;
         item.photo = requiredImage;
-        return item
+        return item;
       });
     },
     slide(direction) {
@@ -86,8 +90,8 @@ new Vue({
       }
     },
   },
-  created() {
-    const data = require("../data/works.json");
+  async created() {
+    const {data} = await axios.get('/works/366')
     this.works = this.requireImagesToArray(data);
   },
 });

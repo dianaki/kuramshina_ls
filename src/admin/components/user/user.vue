@@ -26,7 +26,7 @@ export default {
   computed: {
     userPic() {
       if (this.photo) return `https://webdev-api.loftschool.com/${this.photo}`;
-        return require("../../../images/content/user.jpg").default;
+        return require("../../../images/content/cat.png").default;
     }
   }
 }

@@ -32,7 +32,7 @@ import {Validator, mixin as ValidatorMixin} from "simple-vue-validator";
 
 export default {
   mixins: [ValidatorMixin],
-  validators: {
+  validators: { 
     "skill.title": value => {
       return Validator.value(value).required("Заполните поле");
 
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-     async handleClick() {
+    async handleClick() {
       if (await this.$validate() === false) return;
       this.$emit('approve', this.skill);
     },
