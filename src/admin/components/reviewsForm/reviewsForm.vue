@@ -13,7 +13,7 @@
                   @dragleave="hovered = false"
                   @drop="handleChange"
                 >
-                  <div class="uploader-user-icon" v-if="Object.keys(newReview).length === 0"></div>
+                  <div class="uploader-user-icon" v-if="preview === ''"></div>
                 </div>
                 <div class="uploader-btn">
                   <app-button plain title="Добавить фото" v-model="newReview.photo" typeAttr="file" @change="handleChange"
@@ -102,14 +102,14 @@ export default {
   },
   watch: {
     currentReview() {
-      if(Object.keys(this.currentReview)) {
+      if(Object.keys(this.currentReview).length) {
         this.newReview = {...this.currentReview};
         this.preview = `https://webdev-api.loftschool.com/${this.currentReview.photo}`
       }
     }
   },
   created() {
-    if(Object.keys(this.currentReview)) {
+    if(Object.keys(this.currentReview).length) {
       this.newReview = {...this.currentReview};
       this.preview = `https://webdev-api.loftschool.com/${this.currentReview.photo}`
     }

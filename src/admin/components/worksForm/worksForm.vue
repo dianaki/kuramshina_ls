@@ -115,7 +115,7 @@ export default {
 
   watch: {
     currentWork() {
-      if(Object.keys(this.currentWork)) {
+      if(Object.keys(this.currentWork).length) {
         this.newWork = {...this.currentWork};
         this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
       }
@@ -123,7 +123,7 @@ export default {
   },
 
   created() {
-    if(Object.keys(this.currentWork)) {
+    if(Object.keys(this.currentWork).length) {
       this.newWork = {...this.currentWork};
       this.preview = `https://webdev-api.loftschool.com/${this.currentWork.photo}`
     }

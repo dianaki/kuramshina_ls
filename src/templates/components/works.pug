@@ -1,12 +1,14 @@
 script(type="text/x-template")#preview-container
-  .works-preview
+  .works-preview 
     display(
+      v-if="currentWork"
       :currentWork="currentWork",
       :works="works"
       :currentIndex="currentIndex"
       @slide="slide"
     )
     info(
+      v-if="currentWork"
       :currentWork="currentWork"
     )
   
